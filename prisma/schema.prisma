@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  workspaces Workspace[]
+  documents  Document[]
+}
+
+model Workspace {
+  id        String   @id @default(cuid())
+  name      String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  documents Document[]
+
+  @@index([userId])
+}
+
+model Document {
+  id              String   @id @default(cuid())
+  title           String
+  contentOriginal String   @db.Text
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspaceId     String?
+  workspace       Workspace? @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
+  deletedAt       DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  versions    DocumentVersion[]
+  sources     Source[]
+  rewriteJobs RewriteJob[]
+
+  @@index([userId])
+  @@index([workspaceId])
+}
+
+model DocumentVersion {
+  id               String   @id @default(cuid())
+  documentId       String
+  document         Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  contentRewritten String   @db.Text
+  rewriteParams    Json
+  similarityScore  Float?
+  createdAt        DateTime @default(now())
+
+  @@index([documentId])
+}
+
+model Source {
+  id         String   @id @default(cuid())
+  documentId String
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  url        String?
+  text       String   @db.Text
+  citation   String?
+  createdAt  DateTime @default(now())
+
+  @@index([documentId])
+}
+
+model RewriteJob {
+  id              String   @id @default(cuid())
+  documentId      String
+  document        Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  rewriteParams   Json
+  similarityScore Float?
+  latencyMs       Int?
+  tokenUsage      Int?
+  status          String   @default("pending")
+  error           String?
+  createdAt       DateTime @default(now())
+
+  @@index([documentId])
+  @@index([status])
+}
