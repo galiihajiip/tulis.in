@@ -93,12 +93,15 @@ export default function LandingPage() {
             Untuk menggunakan fitur rewrite, pastikan environment variables sudah di-set:
           </p>
           <ul className="list-disc list-inside text-blue-700 dark:text-blue-300 text-sm mt-2 space-y-1">
-            <li><code className="bg-blue-100 dark:bg-blue-900 px-1 rounded">OPENAI_API_KEY</code> - API key dari OpenAI</li>
+            <li><code className="bg-blue-100 dark:bg-blue-900 px-1 rounded">OPENAI_API_KEY</code> - API key dari OpenAI (dengan credits aktif)</li>
             <li><code className="bg-blue-100 dark:bg-blue-900 px-1 rounded">DATABASE_URL</code> - PostgreSQL connection string</li>
             <li><code className="bg-blue-100 dark:bg-blue-900 px-1 rounded">NEXT_PUBLIC_SUPABASE_URL</code> - Supabase project URL</li>
           </ul>
           <p className="text-blue-700 dark:text-blue-300 text-xs mt-3">
             Lihat <code className="bg-blue-100 dark:bg-blue-900 px-1 rounded">.env.example</code> untuk detail lengkap.
+          </p>
+          <p className="text-blue-700 dark:text-blue-300 text-xs mt-2 font-semibold">
+            ⚠️ Pastikan OpenAI account memiliki credits aktif (minimum $5).
           </p>
         </div>
       </div>

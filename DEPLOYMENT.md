@@ -138,6 +138,20 @@ This creates:
 2. Check database is accessible from Vercel
 3. Whitelist Vercel IPs in database firewall
 
+### Error: "You exceeded your current quota"
+
+**Cause**: OpenAI API key has no credits or exceeded quota.
+
+**Solution**:
+1. Go to [platform.openai.com/account/billing](https://platform.openai.com/account/billing)
+2. Check your billing status
+3. Add payment method if not added
+4. Add credits ($5 minimum recommended)
+5. Wait a few minutes for credits to activate
+6. Try again
+
+**Alternative**: Use a different API key or create new OpenAI account with free trial credits.
+
 ### Error: "Rate limit exceeded"
 
 **Solution**: 

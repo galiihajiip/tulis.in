@@ -83,6 +83,10 @@ OPENAI_API_KEY="sk-..."
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 ```
 
+**Important**: 
+- OpenAI API key must have active credits (minimum $5 recommended)
+- Check billing at [platform.openai.com/account/billing](https://platform.openai.com/account/billing)
+
 ### 3. Database Setup
 ```bash
 # Push schema to database
