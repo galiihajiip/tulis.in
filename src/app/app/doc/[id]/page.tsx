@@ -58,14 +58,18 @@ export default function DocumentPage() {
         }),
       });
 
-      if (!response.ok) throw new Error("Rewrite failed");
+      const data = await response.json();
 
-      const result: RewriteResult = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || "Rewrite failed");
+      }
+
+      const result: RewriteResult = data;
       setRewriteResult(result);
       setViewMode("diff");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Rewrite error:", error);
-      alert("Terjadi kesalahan saat rewrite. Silakan coba lagi.");
+      alert(error.message || "Terjadi kesalahan saat rewrite. Silakan coba lagi.");
     } finally {
       setLoading(false);
     }
