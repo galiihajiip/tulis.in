@@ -59,7 +59,9 @@ Alat bantu menulis untuk parafrase etis dengan fokus pada **clarity**, **style**
 ### Prerequisites
 - Node.js 18+
 - PostgreSQL database (Supabase/Neon recommended)
-- OpenAI API key
+- AI Provider API key:
+  - **Groq** (FREE, recommended) - [console.groq.com](https://console.groq.com)
+  - **OpenAI** (Paid) - [platform.openai.com](https://platform.openai.com)
 
 ### 1. Clone & Install
 ```bash
@@ -79,13 +81,21 @@ DATABASE_URL="postgresql://user:password@localhost:5432/tulisin"
 NEXT_PUBLIC_SUPABASE_URL="your-supabase-url"
 NEXT_PUBLIC_SUPABASE_ANON_KEY="your-anon-key"
 SUPABASE_SERVICE_ROLE_KEY="your-service-role-key"
-OPENAI_API_KEY="sk-..."
+
+# Use Groq (FREE) - Recommended
+GROQ_API_KEY="gsk_..."
+
+# OR use OpenAI (Paid)
+# OPENAI_API_KEY="sk-..."
+
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 ```
 
-**Important**: 
-- OpenAI API key must have active credits (minimum $5 recommended)
-- Check billing at [platform.openai.com/account/billing](https://platform.openai.com/account/billing)
+**Get FREE Groq API Key**:
+1. Visit [console.groq.com](https://console.groq.com)
+2. Sign up (no credit card required)
+3. Create API Key
+4. Copy and paste to `.env`
 
 ### 3. Database Setup
 ```bash

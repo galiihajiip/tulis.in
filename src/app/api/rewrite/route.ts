@@ -20,10 +20,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Check if OpenAI API key is configured
-    if (!process.env.OPENAI_API_KEY) {
+    // Check if any AI provider is configured
+    if (!process.env.GROQ_API_KEY && !process.env.OPENAI_API_KEY) {
       return NextResponse.json(
-        { error: "OpenAI API key not configured. Please set OPENAI_API_KEY environment variable." },
+        { error: "No AI provider configured. Please set GROQ_API_KEY (free) or OPENAI_API_KEY environment variable." },
         { status: 500 }
       );
     }

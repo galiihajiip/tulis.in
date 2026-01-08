@@ -4,7 +4,9 @@
 
 1. **Vercel Account** - Sign up at [vercel.com](https://vercel.com)
 2. **Database** - PostgreSQL (Supabase or Neon recommended)
-3. **OpenAI API Key** - Get from [platform.openai.com](https://platform.openai.com)
+3. **AI Provider** (choose one):
+   - **Groq** (FREE, recommended) - Get from [console.groq.com](https://console.groq.com)
+   - **OpenAI** (Paid) - Get from [platform.openai.com](https://platform.openai.com)
 4. **Supabase Project** (optional) - For auth and database
 
 ## Step 1: Setup Database
@@ -52,8 +54,11 @@ In Vercel Dashboard → Settings → Environment Variables, add:
 ### Required Variables
 
 ```env
-# OpenAI
-OPENAI_API_KEY=sk-proj-...
+# AI Provider (choose one - Groq is FREE)
+GROQ_API_KEY=gsk_...
+
+# OR use OpenAI (paid)
+# OPENAI_API_KEY=sk-proj-...
 
 # Database
 DATABASE_URL=postgresql://user:password@host:5432/database
@@ -66,6 +71,22 @@ SUPABASE_SERVICE_ROLE_KEY=eyJhbGc...
 # App
 NEXT_PUBLIC_APP_URL=https://your-app.vercel.app
 ```
+
+### How to Get Groq API Key (FREE)
+
+1. Go to [console.groq.com](https://console.groq.com)
+2. Sign up with Google/GitHub
+3. Go to **API Keys** section
+4. Click **Create API Key**
+5. Copy the key (starts with `gsk_`)
+6. Paste to Vercel environment variables
+
+**Benefits of Groq**:
+- ✅ 100% FREE
+- ✅ Very fast (faster than OpenAI)
+- ✅ No credit card required
+- ✅ Generous rate limits
+- ✅ Uses Llama 3.3 70B model
 
 ### Optional Variables
 
@@ -120,9 +141,11 @@ This creates:
 
 ## Troubleshooting
 
-### Error: "OpenAI API key not configured"
+### Error: "No AI provider configured"
 
-**Solution**: Add `OPENAI_API_KEY` to Vercel environment variables and redeploy.
+**Solution**: Add either `GROQ_API_KEY` (free) or `OPENAI_API_KEY` to Vercel environment variables and redeploy.
+
+**Recommended**: Use Groq (free) - Get key from [console.groq.com](https://console.groq.com)
 
 ### Error: "Prisma Client not generated"
 

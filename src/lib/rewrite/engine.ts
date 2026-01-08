@@ -3,12 +3,22 @@ import { extractProtectedSpans, validateProtectedSpans } from "./protected-spans
 import { calculateSimilarity } from "./similarity";
 import { generateDiff } from "./diff";
 import { OpenAIRewriteProvider } from "./providers/openai";
+import { GroqRewriteProvider } from "./providers/groq";
 
 export class RewriteEngine {
   private provider: RewriteProvider;
 
   constructor(provider?: RewriteProvider) {
-    this.provider = provider || new OpenAIRewriteProvider(process.env.OPENAI_API_KEY!);
+    // Priority: Custom provider > Groq (free) > OpenAI
+    if (provider) {
+      this.provider = provider;
+    } else if (process.env.GROQ_API_KEY) {
+      this.provider = new GroqRewriteProvider(process.env.GROQ_API_KEY);
+    } else if (process.env.OPENAI_API_KEY) {
+      this.provider = new OpenAIRewriteProvider(process.env.OPENAI_API_KEY);
+    } else {
+      throw new Error("No AI provider configured. Set GROQ_API_KEY or OPENAI_API_KEY environment variable.");
+    }
   }
 
   async rewrite(text: string, params: RewriteParams): Promise<RewriteResult> {
