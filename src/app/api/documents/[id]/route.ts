@@ -3,8 +3,9 @@ import { prisma } from "@/lib/db";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const userId = req.headers.get("x-user-id");
     if (!userId) {
@@ -12,7 +13,7 @@ export async function GET(
     }
 
     const document = await prisma.document.findFirst({
-      where: { id: params.id, userId, deletedAt: null },
+      where: { id, userId, deletedAt: null },
       include: {
         versions: { orderBy: { createdAt: "desc" }, take: 20 },
         sources: true,
@@ -31,8 +32,9 @@ export async function GET(
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const userId = req.headers.get("x-user-id");
     if (!userId) {
@@ -43,7 +45,7 @@ export async function PATCH(
     const { title, contentOriginal } = body;
 
     const document = await prisma.document.updateMany({
-      where: { id: params.id, userId, deletedAt: null },
+      where: { id, userId, deletedAt: null },
       data: {
         ...(title && { title }),
         ...(contentOriginal && { contentOriginal }),
@@ -63,8 +65,9 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const userId = req.headers.get("x-user-id");
     if (!userId) {
@@ -72,7 +75,7 @@ export async function DELETE(
     }
 
     await prisma.document.updateMany({
-      where: { id: params.id, userId },
+      where: { id, userId },
       data: { deletedAt: new Date() },
     });
 
